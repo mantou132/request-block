@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+  "name": "Request block",
+  "description": "Firefox extension network request block",
+  "version": "0.1",
+  "background": {
+    "page": "background/index.html"
+  },
+  "devtools_page": "devtools/index.html",
+  "homepage_url": "https://xianqiao.wang",
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "tabs",
+    "<all_urls>"
+  ]
+}
