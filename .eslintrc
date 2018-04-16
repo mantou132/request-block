@@ -10,6 +10,7 @@
     "no-console": 1
   },
   "env": {
+    "node": true,
     "browser": true,
     "es6": true,
     "webextensions": true

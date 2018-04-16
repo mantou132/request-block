@@ -4,7 +4,8 @@
   "description": "Firefox extension, block network request",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "publish": "node bin/publish.js",
+    "source": "node bin/source.js"
   },
   "keywords": [
     "webextension",

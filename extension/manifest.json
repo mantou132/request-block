@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Request block",
   "description": "Firefox extension network request block",
-  "version": "0.1",
+  "version": "0.0.1",
   "background": {
     "page": "background/index.html"
   },
