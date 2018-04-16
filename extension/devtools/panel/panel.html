@@ -5,8 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Request Block Panel</title>
+  <link rel="stylesheet" href="panel.css">
 </head>
 <body>
+  <div>
+    <label data-action="toggle-global-state"><input id="global-state" type="checkbox">Enable request blocking</label>
+    <button data-action="add-new-item">add</button>
+    <button data-action="request-block-clear">clear</button>
+  </div>
+  <div id="new-item" hidden>
+    <input id="new-tiem-content" type="text">
+    <button data-action="save-create-item">save</button>
+    <button data-action="cancel-create-item">cancel</button>
+  </div>
+  <ul id="items"></ul>
   <script src="panel.js" type="module"></script>
 </body>
 </html>

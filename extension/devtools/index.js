@@ -3,3 +3,11 @@ browser.devtools.panels.create(
   '/icons/block.svg',
   './panel/panel.html'
 );
+browser.runtime.sendMessage({
+  type: 'open-devtools'
+});
+setInterval(() => {
+  browser.runtime.sendMessage({
+    type: 'open-devtools'
+  });
+}, 500);

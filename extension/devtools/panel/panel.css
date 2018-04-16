@@ -1,0 +1,11 @@
+label * {
+  pointer-events: none;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+.disabled {
+  pointer-events: none;
+  opacity: .5;
+}

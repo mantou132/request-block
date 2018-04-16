@@ -9,6 +9,7 @@
   "devtools_page": "devtools/index.html",
   "homepage_url": "https://xianqiao.wang",
   "permissions": [
+    "storage",
     "webRequest",
     "webRequestBlocking",
     "tabs",
