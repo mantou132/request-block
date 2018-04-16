@@ -4,8 +4,7 @@
   "description": "Firefox extension, block network request",
   "main": "index.js",
   "scripts": {
-    "publish": "node bin/publish.js",
-    "source": "node bin/source.js"
+    "publish": "node bin/publish.js"
   },
   "keywords": [
     "webextension",

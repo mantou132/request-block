@@ -26,7 +26,7 @@ fs.writeFileSync(path.resolve(__dirname, '../extension/manifest.json'), JSON.str
   2
 ) + '\n');
 
-child_process.execSync('npm run source');
+child_process.execSync('web-ext build -s extension/ -a build/ -i **/*.map --overwrite-dest');
 
 child_process.execSync(`git commit -a -m 'Update to v${newVersion}'`);
 child_process.execSync(`git tag v${newVersion}`);
