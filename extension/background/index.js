@@ -6,16 +6,25 @@ const throttleCloseDevTools = throttle(() => devtoolsIsOpen = false, 1000);
 
 const requestHandler = ({url}) => {
   if (!devtoolsIsOpen || !blockSetting.enabled) return;
-  if (blockSetting.isMatch(url)) {
-    return {cancel: true};
+  const result = blockSetting.check(url);
+  if (!result) return;
+  const {enabled, redirectUrl} = result;
+  if (!enabled) return;
+  if (redirectUrl) {
+    console.warn(`${url} redirect to ${redirectUrl}`);
+    return {redirectUrl};
   }
+  console.warn(`${url} be block`);
+  return {cancel: true};
 };
 
-browser.webRequest.onBeforeSendHeaders.addListener(
+browser.webRequest.onBeforeRequest.addListener(
   requestHandler,
   {urls: ['<all_urls>']},
-  ['blocking', 'requestHeaders']
+  ['blocking']
 );
+
+
 
 browser.runtime.onMessage.addListener(({type, data}) => {
   if (type === 'open-devtools') {
@@ -38,10 +47,10 @@ browser.runtime.onMessage.addListener(({type, data}) => {
     return blockSetting.clear();
   }
   if (type === 'request-block-add') {
-    return blockSetting.add(data);
+    return blockSetting.addItem(data);
   }
   if (type === 'request-block-delete') {
-    return blockSetting.delete(data);
+    return blockSetting.deleteItem(data);
   }
   if (type === 'request-block-enabled-item') {
     return blockSetting.enabledItem(data);

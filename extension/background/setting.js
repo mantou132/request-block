@@ -23,37 +23,42 @@ class BlockSetting {
     await browser.storage.local.set({list: new Map});
     this.list = new Map;
   }
-  async add (item) {
+  async addItem ({pattern, data}) {
     // if (this.list.has(item)) throw new Error('some item');
     await browser.storage.local.set({
-      list: new Map(this.list).set(item, true)
+      list: new Map(this.list).set(pattern, data)
     });
-    this.list.set(item, true);
+    this.list.set(pattern, data);
   }
-  async delete (item) {
+  async deleteItem (pattern) {
     const temp = new Map(this.list)
-    temp.delete(item);
+    temp.delete(pattern);
     await browser.storage.local.set({
       list: temp
     });
-    this.list.delete(item);
+    this.list.delete(pattern);
   }
-  async enabledItem (item) {
+  async enabledItem (pattern) {
+    const data = this.list.get(pattern);
+    const nextData = {...data, enabled: true};
     await browser.storage.local.set({
-      list: new Map(this.list).set(item, true)
+      list: new Map(this.list).set(pattern, nextData)
     });
-    this.list.set(item, true);
+    this.list.set(pattern, nextData);
   }
-  async disabledItem (item) {
+  async disabledItem (pattern) {
+    const data = this.list.get(pattern);
+    const nextData = {...data, enabled: false};
     await browser.storage.local.set({
-      list: new Map(this.list).set(item, false)
+      list: new Map(this.list).set(pattern, nextData)
     });
-    this.list.set(item, false);
+    this.list.set(pattern, nextData);
   }
-  async toggleItem (item) {
-    const nextState = !this.list.get(item);
-    await browser.storage.local.set({enabled: nextState});
-    this.list.set(item, nextState);
+  async toggleItem (pattern) {
+    const data = this.list.get(pattern);
+    const nextData = {...data, enabled: !data.enabled};
+    await browser.storage.local.set({enabled: nextData});
+    this.list.set(pattern, nextData);
   }
   json () {
     return {
@@ -61,15 +66,19 @@ class BlockSetting {
       list: [...this.list]
     }
   }
-  isMatch (str) {
-    for (const [item, enabled] of this.list) {
-      if (enabled) {
-        if (item === str) return true;
-        try {
-          if (new RegExp(item).exec(str)) return true;
-        } catch (e) {
-          //
-        }
+  /**
+   * @param {string} str 检查都 url
+   * @return {object|undefined} result
+   * @return {boolean} result.enabled
+   * @return {string} result.redirectUrl
+   */
+  check (str) {
+    for (const [item, data] of this.list) {
+      if (item === str) return data;
+      try {
+        if (new RegExp(item).exec(str)) return data;
+      } catch (e) {
+        //
       }
     }
   }
